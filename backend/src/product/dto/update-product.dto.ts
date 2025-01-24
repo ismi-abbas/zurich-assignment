@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEnum } from 'class-validator';
+import { IsString, IsEnum, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { MalaysiaRegion } from './create-product.dto';
 
@@ -9,27 +9,27 @@ export class UpdateProductDto {
     example: MalaysiaRegion.WEST_MALAYSIA,
   })
   @IsEnum(MalaysiaRegion)
-  @IsNotEmpty()
+  @IsOptional()
   location: MalaysiaRegion;
 
   @ApiProperty({ description: "Product's price", example: '100' })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   price: string;
 
   @ApiProperty({
     description: "Product's code",
     example: '1000',
   })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   productCode: string;
 
   @ApiProperty({
     description: "Product's description",
     example: 'Sedan',
   })
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   productDescription: string;
 }

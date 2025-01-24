@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpCode,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
-import { Product } from './product.entity';
+import { Product } from '../entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -10,8 +15,28 @@ export class ProductService {
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,
   ) {}
-  findAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+  findAll({
+    productCode,
+    location,
+  }: Pick<Product, 'productCode' | 'location'>): Promise<Product[]> {
+    switch (location) {
+      case 'east':
+        return this.productsRepository.find({
+          where: {
+            productCode,
+            location: 'East Malaysia',
+          },
+        });
+      case 'west':
+        return this.productsRepository.find({
+          where: {
+            productCode,
+            location: 'West Malaysia',
+          },
+        });
+      default:
+        return this.productsRepository.find();
+    }
   }
 
   findOne(productId: number) {
@@ -34,19 +59,33 @@ export class ProductService {
     return this.productsRepository.save(newProduct);
   }
 
-  update(
-    productId: number,
-    { location, price, productCode, productDescription }: Product,
-  ) {
-    return this.productsRepository.update(productId, {
-      price,
-      productCode,
-      productDescription,
-      location,
-    });
+  async update({ productCode, ...rest }: Omit<Product, 'id'>) {
+    console.log({ productCode, rest });
+    try {
+      const updatedProduct = await this.productsRepository.update(
+        { productCode },
+        { ...rest },
+      );
+
+      if (updatedProduct.affected === 0) {
+        throw new NotFoundException();
+      }
+
+      return this.productsRepository.findOneBy({ productCode });
+    } catch {
+      throw new NotFoundException();
+    }
   }
 
-  delete(productId: number) {
-    return this.productsRepository.delete({ id: productId });
+  @HttpCode(HttpStatus.OK)
+  async delete(productCode: string) {
+    const deleted = await this.productsRepository.delete({ productCode });
+    if (deleted.affected === 0) {
+      throw new NotFoundException();
+    }
+
+    return {
+      message: 'Product deleted',
+    };
   }
 }
