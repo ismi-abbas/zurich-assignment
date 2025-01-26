@@ -60,7 +60,6 @@ export class ProductService {
   }
 
   async update({ productCode, ...rest }: Omit<Product, 'id'>) {
-    console.log({ productCode, rest });
     try {
       const updatedProduct = await this.productsRepository.update(
         { productCode },
