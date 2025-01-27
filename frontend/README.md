@@ -1,40 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Zurich Insurance Claims Management Frontend
+
+## Overview
+
+This is the frontend application for the Zurich Insurance Claims Management System, built with Next.js using the Pages Router architecture and Redux for state management.
+
+## Architecture
+
+### Pages Router
+
+The application uses Next.js Pages Router for routing, providing:
+
+- Server-side rendering for better performance
+- File-system based routing
+- API routes for backend communication
+- Automatic code splitting
+
+### State Management
+
+Redux Toolkit is used for state management with the following structure:
+
+#### Claims Slice (`/store/slices/claimSlice.ts`)
+
+- Manages claims data and UI state
+- Features:
+  - CRUD operations for claims
+  - Filtering and sorting functionality
+  - Search capabilities
+  - Loading and error states
+
+#### Policies Slice (`/store/slices/policySlice.ts`)
+
+- Handles policy-related state
+- Features:
+  - Policy data management
+  - CRUD operations
+  - State synchronization
+
+## Key Features
+
+- Claims Management
+  - View all claims with filtering and sorting
+  - Create new claims
+  - Update claim status
+  - Delete claims
+- Policy Management
+  - View policy details
+  - Link policies to claims
+- Modern UI with responsive design
+- Real-time state updates
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+frontend/
+├── src/
+│   ├── pages/          # Next.js pages
+│   │   ├── claims/     # Claims-related pages
+│   │   └── policies/   # Policy-related pages
+│   ├── components/     # Reusable components
+│   ├── store/          # Redux store configuration
+│   │   ├── slices/     # Redux slices
+│   │   └── store.ts    # Store configuration
+│   └── styles/         # Global styles
+└── public/            # Static assets
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- Next.js - React framework
+- Redux Toolkit - State management
+- TypeScript - Programming language
+- Tailwind CSS - Styling

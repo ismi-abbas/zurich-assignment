@@ -1,6 +1,7 @@
 import React from "react";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import Button from "./ui/button";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -17,12 +18,6 @@ export default function Header() {
               Zurich
             </Link>
             <nav className="hidden md:ml-8 md:flex md:space-x-8">
-              <Link
-                href="/dashboard"
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
-              >
-                Dashboard
-              </Link>
               <Link
                 href="/policies"
                 className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
@@ -44,12 +39,7 @@ export default function Header() {
                 <span className="text-sm text-gray-700">
                   {session.user?.name}
                 </span>
-                <button
-                  onClick={() => signOut()}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Sign Out
-                </button>
+                <Button onClick={() => signOut()}>Sign Out</Button>
               </div>
             ) : (
               <Link
